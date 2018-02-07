@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
      * References to RecyclerView and Adapter to reset the list to its
-     * "pretty" state when the reset menu item is clicked.
+     * "pretty" state when the reset main item is clicked.
      */
     private GreenAdapter mAdapter;
     private RecyclerView mNumbersList;
@@ -68,5 +70,21 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
 
         mNumbersList.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_refresh){
+            mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+            mNumbersList.setAdapter(mAdapter);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
