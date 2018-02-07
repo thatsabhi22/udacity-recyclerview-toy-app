@@ -23,7 +23,7 @@ import android.support.v4.content.ContextCompat;
  * ColorUtils is a class with one method, used to color the ViewHolders in
  * the RecyclerView. I put in a separate class in an attempt to keep the
  * code organized.
- *
+ * <p>
  * We aren't going to go into detail about how this method works, but feel
  * free to explore!
  */
@@ -34,7 +34,7 @@ public class ColorUtils {
      * seen in the list, based off of the order in which the
      * {@link com.example.android.recyclerview.GreenAdapter.NumberViewHolder}
      * instance was created.
-     *
+     * <p>
      * This method is used to show how ViewHolders are recycled in a RecyclerView.
      * At first, the colors will form a nice, consistent gradient. As the
      * RecyclerView is scrolled, the
@@ -43,7 +43,6 @@ public class ColorUtils {
      *
      * @param context     Context for getting colors
      * @param instanceNum Order in which the calling ViewHolder was created
-     *
      * @return A shade of green based off of when the calling ViewHolder
      * was created.
      */
