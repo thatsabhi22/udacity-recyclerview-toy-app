@@ -21,8 +21,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GreenAdapter.ListItemClickListener {
 
     private static final int NUM_LIST_ITEMS = 100;
 
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private GreenAdapter mAdapter;
     private RecyclerView mNumbersList;
+
+    /*
+     * If we hold a reference to our Toast, we can cancel it (if it's showing)
+     * to display a new Toast. If we didn't do this, Toasts would be delayed
+     * in showing up if you clicked many list items in quick succession.
+     */
+    private Toast mToast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +76,45 @@ public class MainActivity extends AppCompatActivity {
         /*
          * The GreenAdapter is responsible for displaying each item in the list.
          */
-        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS, this);
 
         mNumbersList.setAdapter(mAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_refresh){
-            mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        if (item.getItemId() == R.id.action_refresh) {
+            mAdapter = new GreenAdapter(NUM_LIST_ITEMS, this);
             mNumbersList.setAdapter(mAdapter);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onListItemClick(int clickPosition) {
+
+         /*
+         * Even if a Toast isn't showing, it's okay to cancel it. Doing so
+         * ensures that our new Toast will show immediately, rather than
+         * being delayed while other pending Toasts are shown.
+         *
+         * Comment out these three lines, run the app, and click on a bunch of
+         * different items if you're not sure what I'm talking about.
+         */
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        String toastMessage = "Item #" + clickPosition + " clicked.";
+        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
+
+        mToast.show();
     }
 }

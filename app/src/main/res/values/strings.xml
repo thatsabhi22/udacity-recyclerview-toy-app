@@ -15,5 +15,6 @@
 -->
 <resources>
     <string name="app_name">RecyclerView</string>
+    <string name="app_title">Udacity RecyclerView Toy App</string>
     <string name="action_reset">Reset</string>
 </resources>
